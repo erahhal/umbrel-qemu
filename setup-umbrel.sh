@@ -3,7 +3,7 @@
 set -e
 
 DEBIAN_MIRROR=https://saimei.ftp.acc.umu.se
-DEBIAN_IMAGE=debian-12.2.0-amd64-netinst.iso
+DEBIAN_IMAGE=debian-12.5.0-amd64-netinst.iso
 
 # @TODO: map folder
 
@@ -17,15 +17,16 @@ sudo rm -rf ISOFILES preseed-$DEBIAN_IMAGE umbrel.img
 # Get image
 #--------------------
 mkdir -p ~/VMs/umbrel
-cd ~/VMs/umbrel
+pushd ~/VMs/umbrel
 if [ ! -f $DEBIAN_IMAGE ]; then
   axel -n 8 $DEBIAN_MIRROR/debian-cd/current/amd64/iso-cd/$DEBIAN_IMAGE
 fi
+popd
 
 #--------------------
 # Extract image
 #--------------------
-7z x -aoa -oISOFILES $DEBIAN_IMAGE
+7z x -aoa -oISOFILES ~/VMs/umbrel/$DEBIAN_IMAGE
 
 #--------------------
 # Add preseed.cfg
